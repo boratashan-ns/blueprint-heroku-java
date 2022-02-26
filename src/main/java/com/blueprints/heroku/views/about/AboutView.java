@@ -23,9 +23,11 @@ public class AboutView extends VerticalLayout {
         add(img);
 
         String info = applicationInfoProvider.getInfo();
+        String appName = applicationInfoProvider.getAppName();
         add(new H2("This place intentionally left empty"));
         add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
         add(new Paragraph(info));
+        add(new Paragraph(appName));
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
