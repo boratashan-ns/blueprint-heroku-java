@@ -1,1 +1,1 @@
-web: java -Dvaadin.productionMode=true  -jar target/myapp-1.0-SNAPSHOT.jar
+web: java -Dvaadin.productionMode=true  -jar target/heroku-blueprint-app-1.0-SNAPSHOT.jar
