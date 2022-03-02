@@ -26,8 +26,12 @@ public class HelloWorldView extends HorizontalLayout {
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
         sayHello.addClickListener(e -> {
-            String res = dataClient.getAppInfo();
-            Notification.show("Hello " + name.getValue() +" appinfo->"+res);
+            try {
+                String res = dataClient.getAppInfo();
+                Notification.show("Hello " + name.getValue() + " appinfo->" + res);
+            }catch (Exception exception) {
+                Notification.show("Exception : "+exception.getMessage());
+            }
         });
 
         setMargin(true);
