@@ -12,6 +12,7 @@
     <properties>
         <java.version>11</java.version>
         <vaadin.version>22.0.6</vaadin.version>
+
     </properties>
 
     <parent>
@@ -165,8 +166,6 @@
         </dependency>
 
 
-
-        <!--
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>openapi-generator</artifactId>
@@ -183,7 +182,22 @@
             <artifactId>openapi-generator-maven-plugin</artifactId>
             <version>5.4.0</version>
         </dependency>
-        -->
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
+
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.13.6</version>
+        </dependency>
 
     </dependencies>
 
@@ -231,8 +245,8 @@
                 </configuration>
             </plugin>
 
-            <!--
 
+<!--
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -337,4 +351,5 @@
         </profile>
 
     </profiles>
+
 </project>

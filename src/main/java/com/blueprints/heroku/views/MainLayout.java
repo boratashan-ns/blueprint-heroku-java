@@ -3,6 +3,7 @@ package com.blueprints.heroku.views;
 
 import com.blueprints.heroku.views.about.AboutView;
 import com.blueprints.heroku.views.helloworld.HelloWorldView;
+import com.blueprints.heroku.views.settings.SettingsView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -118,11 +119,10 @@ public class MainLayout extends AppLayout {
     }
 
     private MenuItemInfo[] createMenuItems() {
-        return new MenuItemInfo[]{ //
+        return new MenuItemInfo[]{
                 new MenuItemInfo("Hello World", "la la-globe", HelloWorldView.class), //
-
                 new MenuItemInfo("About", "la la-file", AboutView.class), //
-
+                new MenuItemInfo("Settings", "la la-file", SettingsView.class),
         };
     }
 

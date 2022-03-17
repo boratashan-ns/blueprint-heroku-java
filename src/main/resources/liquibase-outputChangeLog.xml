@@ -7,6 +7,13 @@
             <column name="revnr" type="INT"/>
         </createTable>
     </changeSet>
+    <changeSet author="btashan (generated)" id="1647206436766-1">
+        <createTable tableName="app_info">
+            <column name="app_name" type="VARCHAR(64)"/>
+            <column name="app_description" type="VARCHAR(256)"/>
+            <column name="revnr" type="INT"/>
+        </createTable>
+    </changeSet>
     <changeSet author="btashan (generated)" id="1647206436766-2">
         <createTable tableName="event_stream_payloads">
             <column name="tenant" type="VARCHAR(32)"/>
@@ -16,7 +23,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="event_tag" type="VARCHAR(128)"/>
-            <column name="payload" type="JSONB"/>
+            <column name="payload" type="JSON(2147483647)"/>
             <column defaultValueNumeric="1" name="event_seq_nr" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
