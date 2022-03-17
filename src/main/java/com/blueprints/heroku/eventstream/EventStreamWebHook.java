@@ -22,6 +22,7 @@ public class EventStreamWebHook {
     @PostMapping("/event")
     public ResponseEntity<String> webhookListener(@RequestBody String payload) {
         logger.info(String.format("[%s], [%s]", "event-stream recv", payload ));
+        System.out.println(String.format("[%s], [%s]", "event-stream recv", payload ));
         return ResponseEntity.ok("");
     }
 
