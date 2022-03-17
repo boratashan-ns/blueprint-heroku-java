@@ -30,4 +30,13 @@
             <column name="published_at"/>
         </createIndex>
     </changeSet>
+    <changeSet author="btashan (generated)" id="1647206436766-5">
+        <addColumn tableName="event_stream_payloads" >
+
+            <column defaultValueBoolean="false" name="is_processed" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

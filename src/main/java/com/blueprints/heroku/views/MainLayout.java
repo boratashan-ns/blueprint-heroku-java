@@ -19,12 +19,14 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The main view is a top-level placeholder for other views.
  */
 public class MainLayout extends AppLayout {
-
+    private Logger logger = LoggerFactory.getLogger(SettingsView.class);
     /**
      * A simple navigation item component, based on ListItem element.
      */
@@ -137,6 +139,7 @@ public class MainLayout extends AppLayout {
     protected void afterNavigation() {
         super.afterNavigation();
         viewTitle.setText(getCurrentPageTitle());
+        logger.info(String.format("Current page is : %s", getCurrentPageTitle()));
     }
 
     private String getCurrentPageTitle() {

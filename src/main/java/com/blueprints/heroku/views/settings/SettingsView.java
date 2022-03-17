@@ -5,9 +5,7 @@ import com.blueprints.heroku.commons.RestClientException;
 import com.blueprints.heroku.data.DataClient;
 import com.blueprints.heroku.eventstream.EventStreamService;
 import com.blueprints.heroku.views.MainLayout;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.button.Button;
@@ -20,6 +18,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import kong.unirest.HttpResponse;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -27,7 +29,7 @@ import org.springframework.beans.factory.annotation.Value;
 @PageTitle("Settings")
 @Route(value = "settings", layout = MainLayout.class)
 public class SettingsView extends VerticalLayout {
-
+    private Logger logger = LoggerFactory.getLogger(SettingsView.class);
 
     private String esIntegrationId;
     private String esDefaultCallbackUrl;
@@ -170,6 +172,7 @@ public class SettingsView extends VerticalLayout {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
+        logger.info("Entering to settings.");
         //  checkIntegrationStatus();
     }
 

@@ -37,4 +37,38 @@
             <column name="published_at"/>
         </createIndex>
     </changeSet>
+    <changeSet author="btashan (generated)" id="1647547627898-1">
+        <createTable tableName="app_info">
+            <column name="app_name" type="VARCHAR(64)"/>
+            <column name="app_description" type="VARCHAR(256)"/>
+            <column name="revnr" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647547627898-2">
+        <createTable tableName="event_stream_payloads">
+            <column name="tenant" type="VARCHAR(32)"/>
+            <column name="name" type="VARCHAR(64)"/>
+            <column name="published_at" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+            <column name="event_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_tag" type="VARCHAR(128)"/>
+            <column name="payload" type="JSON(2147483647)"/>
+            <column defaultValueNumeric="1" name="event_seq_nr" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="is_processed" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647547627898-3">
+        <addPrimaryKey columnNames="event_id, event_seq_nr" constraintName="pk_event_Stream_payload_uniqueness" tableName="event_stream_payloads"/>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647547627898-4">
+        <createIndex indexName="ix_event_stream_payloads_published_at" tableName="event_stream_payloads">
+            <column name="published_at"/>
+        </createIndex>
+    </changeSet>
+
 </databaseChangeLog>
