@@ -53,7 +53,7 @@ public class EventStreamWebHook {
 
             JsonElement jsonElement = JsonParser.parseString(payload);
             String tenant = jsonElement.getAsJsonObject().get("tenant").getAsString();
-            String name = jsonElement.getAsJsonObject().get("tenant").getAsString();
+            String name = jsonElement.getAsJsonObject().get("name").getAsString();
             String timestamp = jsonElement.getAsJsonObject().get("published_at").getAsString();
             Timestamp published_at = Timestamp.from(Instant.parse(timestamp));
 
