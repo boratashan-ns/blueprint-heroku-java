@@ -38,7 +38,8 @@ public class EventStreamProcessor {
                 UUID uid = this.saveEventToDb(event);
                 if (event.getName().equalsIgnoreCase("order.completed")) {
                     SimpleQueueMessage msg = new SimpleQueueMessage("order.completed.request", uid.toString());
-                    amqpService.send(TOPIC_ORDER_PROCESS, msg.convertToJsonString());
+                    logger.info(String.format("Sending -> %s", uid.toString()));
+                    amqpService.send(TOPIC_ORDER_PROCESS, uid.toString());
                 }
                 break;
             case INVENTORY:
@@ -57,7 +58,7 @@ public class EventStreamProcessor {
         logger.info(String.format("Received -> %s", content));
         SimpleQueueMessage message =  SimpleQueueMessage.parse(content);
         String rowId = message.getMessage();
-        this.createOrderData(UUID.fromString(rowId));
+        this.createOrderData(UUID.fromString(content));
 
     }
 
