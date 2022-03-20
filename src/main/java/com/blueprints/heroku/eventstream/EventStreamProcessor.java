@@ -56,8 +56,8 @@ public class EventStreamProcessor {
     @RabbitListener(queues = TOPIC_ORDER_PROCESS)
     public void processMessage(String content) {
         logger.info(String.format("Received -> %s", content));
-        SimpleQueueMessage message =  SimpleQueueMessage.parse(content);
-        String rowId = message.getMessage();
+        //SimpleQueueMessage message =  SimpleQueueMessage.parse(content);
+        //String rowId = message.getMessage();
         this.createOrderData(UUID.fromString(content));
 
     }
