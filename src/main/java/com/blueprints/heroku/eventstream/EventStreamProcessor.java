@@ -1,10 +1,10 @@
 package com.blueprints.heroku.eventstream;
 
 
-import com.google.gson.JsonElement;
+import com.blueprints.heroku.commons.SimpleQueueMessage;
+import com.blueprints.heroku.queue.AmqpService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,14 +13,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-
-
-import java.lang.reflect.Type;
+import org.springframework.stereotype.Component;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.UUID;
 
 @Component
@@ -79,7 +74,7 @@ public class EventStreamProcessor {
 
         try {
 
-            String id = event.getPayload().getAsJsonObject().get("id").getAsString();
+            String id = event.getPayload().getAsJsonObject().getAsJsonObject("payload").get("id").getAsString();
             UUID eventId = UUID.fromString(id);
             KeyHolder keyHolder = new GeneratedKeyHolder();
             final UUID uid = UUID.randomUUID();
@@ -111,43 +106,42 @@ public class EventStreamProcessor {
 
     private void createOrderData(UUID payloadId) {
 
-        String qry = "SELECT * FROM public.event_stream_payloads AS a\n" +
-                "INNER JOIN public.event_stream_payloads as b on (a.event_id = b.event_id) and (b.uid = ? )";
+        String qry = String.format("SELECT * FROM public.event_stream_payloads AS a\n" +
+                "INNER JOIN public.event_stream_payloads as b on (a.event_id = b.event_id) and (b.uid = \'%s\' )", payloadId.toString());
 
-        List<ImmutablePair<String, String>> eventNames = new ArrayList<>();
-        String orderId = "";
-        String externalId = "";
-
-        jdbcTemplate.query(qry, new Object[]{payloadId}, new int[] {Types.VARCHAR}, rs -> {
-            String eventName = "";
+        //new Object[]{payloadId.toString()}, new int[] {Types.VARCHAR},
+        Orders o = jdbcTemplate.query(qry,  rs -> {
+            Orders orders = new Orders();
             while (rs.next()) {
-                eventNames.add(ImmutablePair.of(rs.getString("name"), rs.getString("payload")));
-                eventName = eventNames.add(rs.getString("name"));
-                orderId = rs.getString("event_id");
+                orders.getEvents().add(rs.getString("payload"));
+                orders.setOrderId(rs.getString("event_id"));
+                String eventName = rs.getString("name");
                 String payload = rs.getString("payload");
                 if (eventName.equalsIgnoreCase("order.opened") || eventName.equalsIgnoreCase("order.created")) {
-                    JsonObject jsonObject =  JsonParser.parseString(payload).getAsJsonObject();
+                    JsonObject jsonObject =  JsonParser.parseString(payload).getAsJsonObject().getAsJsonObject("payload");
                     if (jsonObject.has("external_id")) {
-                        externalId = jsonObject.getAsJsonObject("external_id").getAsString();
+                        orders.setOrderExtId(jsonObject.getAsJsonObject("external_id").getAsString());
                     }
                 }
             }
+            orders.setStatus(OrderStatus.INPROCESS);
+            return orders;
         });
         StringBuilder events = new StringBuilder();
         events.append("[");
         boolean added = false;
-        for(ImmutablePair<String, String> psir : eventNames) {
-            String payload = psir.getRight();
-            events.append(payload).append(",");
+        for(String s : o.getEvents()) {
+            events.append(s).append(",");
             added = true;
         }
         if (added) {
             events.deleteCharAt(events.length() - 1);
         }
         events.append("]");
+
         String insertQry = "INSERT INTO public.orders (orderid, order_ext_id, status, events) VALUES (?, ?, ?, ?) ";
         jdbcTemplate.update(insertQry,
-                            new Object[] {orderId, externalId, "", events.toString()},
+                            new Object[] {o.getOrderId(), o.getOrderExtId(), o.getStatus(), events.toString()},
                             new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR});
 
         //UUID event_id = jdbcTemplate.queryForObject(qryReadFromPayload, new Object[] {payloadId}, UUID.class);

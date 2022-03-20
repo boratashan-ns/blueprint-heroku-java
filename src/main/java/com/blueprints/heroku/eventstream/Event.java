@@ -28,7 +28,7 @@ public class Event {
         Timestamp published_at = Timestamp.from(Instant.parse(timestamp));
         //String id = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("id").getAsString();
         //UUID eventId = UUID.fromString(id);
-        JsonObject pload = jsonElement.getAsJsonObject().get("payload").getAsJsonObject();
+        JsonObject pload = jsonElement.getAsJsonObject();
         event.setName(name);
         event.setTenant(tenant);
         event.setPublishedAt(published_at);
