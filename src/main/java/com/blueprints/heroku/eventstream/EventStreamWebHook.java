@@ -31,12 +31,15 @@ public class EventStreamWebHook {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private EventStreamProcessor eventStreamProcessor;
 
     @PostMapping("/event")
     public ResponseEntity<String> webhookListener(@RequestBody String payload) {
         logger.info(String.format("[%s], [%s]", "event-stream recv", payload ));
         System.out.println(String.format("[%s], [%s]", "event-stream recv", payload ));
-        savePayloadToDb(payload);
+        eventStreamProcessor.processEventStreamEvent(payload);
+        //savePayloadToDb(payload);
         return ResponseEntity.ok("");
     }
 

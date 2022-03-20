@@ -5,6 +5,7 @@ import com.blueprints.heroku.commons.NewstoreRestClient;
 import com.blueprints.heroku.commons.RestClientException;
 import com.blueprints.heroku.data.DataClient;
 import com.blueprints.heroku.eventstream.EventStreamService;
+import com.blueprints.heroku.queue.AmqpService;
 import com.blueprints.heroku.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
@@ -32,13 +33,16 @@ public class HelloWorldView extends HorizontalLayout {
     private EventStreamService eventStreamService;
 
     @Autowired
+    private AmqpService amqpService;
+
+    @Autowired
     public HelloWorldView(DataClient dataClient) {
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
         sayHello.addClickListener(e -> {
             try {
                 //String res = dataClient.getAppInfo();
-
+                amqpService.send("orders", "Sending a message");
                 String res = getIntegrationDetails();
                 Notification.show("Hello " + name.getValue() + " appinfo->" + res);
             }catch (Exception exception) {

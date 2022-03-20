@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="btashan (generated)" id="1645987662051-1">
+
+    <changeSet author="btashan (generated)" id="1647722883755-1">
+        <createSequence sequenceName="orders_recid_seq"/>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647722883755-2">
         <createTable tableName="app_info">
             <column name="app_name" type="VARCHAR(64)"/>
             <column name="app_description" type="VARCHAR(256)"/>
             <column name="revnr" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="btashan (generated)" id="1647206436766-2">
+    <changeSet author="btashan (generated)" id="1647722883755-3">
         <createTable tableName="event_stream_payloads">
             <column name="tenant" type="VARCHAR(32)"/>
             <column name="name" type="VARCHAR(64)"/>
@@ -16,28 +20,54 @@
                 <constraints nullable="false"/>
             </column>
             <column name="event_tag" type="VARCHAR(128)"/>
-            <column name="payload" type="JSONB"/>
             <column defaultValueNumeric="1" name="event_seq_nr" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="is_processed" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payload" type="VARCHAR(8192)"/>
+            <column name="uid" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="btashan (generated)" id="1647206436766-3">
-        <addPrimaryKey columnNames="event_id, event_seq_nr" constraintName="pk_event_Stream_payload_uniqueness" tableName="event_stream_payloads"/>
+    <changeSet author="btashan (generated)" id="1647722883755-4">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="recid" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="orders_pkey"/>
+            </column>
+            <column name="orderid" type="VARCHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_ext_id" type="VARCHAR(32)"/>
+            <column name="status" type="VARCHAR(16)"/>
+            <column name="statusex" type="VARCHAR(16)"/>
+            <column name="events" type="TEXT"/>
+            <column name="gql" type="TEXT"/>
+        </createTable>
     </changeSet>
-    <changeSet author="btashan (generated)" id="1647206436766-4">
+    <changeSet author="btashan (generated)" id="1647722883755-5">
+        <addPrimaryKey columnNames="uid" constraintName="event_stream_payloads_pkey" tableName="event_stream_payloads"/>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647722883755-6">
+        <addUniqueConstraint columnNames="order_ext_id" constraintName="ix_orders_order_ext_id" tableName="orders"/>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647722883755-7">
+        <addUniqueConstraint columnNames="orderid" constraintName="ix_orders_orderid" tableName="orders"/>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647722883755-8">
+        <addUniqueConstraint columnNames="event_id, event_seq_nr" constraintName="uniqueness_01_event_stream_payloads" tableName="event_stream_payloads"/>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647722883755-9">
+        <createIndex indexName="ix_event_stream_payloads_event_id" tableName="event_stream_payloads">
+            <column name="event_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="btashan (generated)" id="1647722883755-10">
         <createIndex indexName="ix_event_stream_payloads_published_at" tableName="event_stream_payloads">
             <column name="published_at"/>
         </createIndex>
-    </changeSet>
-    <changeSet author="btashan (generated)" id="1647206436766-5">
-        <addColumn tableName="event_stream_payloads" >
-
-            <column defaultValueBoolean="false" name="is_processed" type="BOOL">
-                <constraints nullable="false"/>
-            </column>
-
-        </addColumn>
     </changeSet>
 
 </databaseChangeLog>
