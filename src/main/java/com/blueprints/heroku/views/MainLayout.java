@@ -2,7 +2,7 @@ package com.blueprints.heroku.views;
 
 
 import com.blueprints.heroku.views.about.AboutView;
-import com.blueprints.heroku.views.helloworld.HelloWorldView;
+import com.blueprints.heroku.views.sampleholder.SampleHolderView;
 import com.blueprints.heroku.views.settings.SettingsView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -94,7 +94,7 @@ public class MainLayout extends AppLayout {
     }
 
     private Component createDrawerContent() {
-        H2 appName = new H2("My App");
+        H2 appName = new H2("Newstore IAP");
         appName.addClassNames("flex", "items-center", "h-xl", "m-0", "px-m", "text-m");
 
         com.vaadin.flow.component.html.Section section = new com.vaadin.flow.component.html.Section(appName,
@@ -122,9 +122,11 @@ public class MainLayout extends AppLayout {
 
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{
-                new MenuItemInfo("Hello World", "la la-globe", HelloWorldView.class), //
+                new MenuItemInfo("Sample holder", "la la-globe", SampleHolderView.class), //
+                new MenuItemInfo("Event stream", "la la-globe", EventStreamView.class), //
+                new MenuItemInfo("Orders stream", "la la-globe", OrdersStreamView.class), //
+                new MenuItemInfo("Settings", "la la-file", SettingsView.class),//
                 new MenuItemInfo("About", "la la-file", AboutView.class), //
-                new MenuItemInfo("Settings", "la la-file", SettingsView.class),
         };
     }
 

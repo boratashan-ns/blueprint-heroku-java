@@ -1,4 +1,4 @@
-package com.blueprints.heroku.eventstream;
+package com.blueprints.heroku.services.eventstream;
 
 
 import com.blueprints.heroku.commons.SimpleQueueMessage;
@@ -37,8 +37,8 @@ public class EventStreamProcessor {
             case ORDER:
                 UUID uid = this.saveEventToDb(event);
                 if (event.getName().equalsIgnoreCase("order.completed")) {
-                    SimpleQueueMessage msg = new SimpleQueueMessage("order.completed.request", uid.toString());
-                    logger.info(String.format("Sending -> %s", uid.toString()));
+                    //SimpleQueueMessage msg = new SimpleQueueMessage("order.completed.request", uid.toString());
+                    logger.debug(String.format("Sending -> %s", uid.toString()));
                     amqpService.send(TOPIC_ORDER_PROCESS, uid.toString());
                 }
                 break;
@@ -95,11 +95,11 @@ public class EventStreamProcessor {
             }, keyHolder);
             return uid;
         } catch (DuplicateKeyException e) {
-            logger.info(String.format("Exception while inserting eventstream event payload, exception -> %s", e.toString()));
-            logger.info("Skip duplicate record");
+            logger.error(String.format("Exception while inserting eventstream event payload, exception -> %s", e.toString()));
+            logger.error("Skip duplicate record");
             throw e;
         } catch (Exception e) {
-            logger.info(String.format("Exception while inserting eventstream event payload, exception -> %s", e.toString()));
+            logger.error(String.format("Exception while inserting eventstream event payload, exception -> %s", e.toString()));
             throw e;
         }
     }

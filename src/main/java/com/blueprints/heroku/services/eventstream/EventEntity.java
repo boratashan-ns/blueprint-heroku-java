@@ -1,4 +1,4 @@
-package com.blueprints.heroku.eventstream;
+package com.blueprints.heroku.services.eventstream;
 
 public enum EventEntity {
     ORDER("order"),

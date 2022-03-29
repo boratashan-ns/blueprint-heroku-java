@@ -1,4 +1,4 @@
-package com.blueprints.heroku.eventstream;
+package com.blueprints.heroku.services.eventstream;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

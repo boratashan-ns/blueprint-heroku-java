@@ -1,4 +1,4 @@
-package com.blueprints.heroku.eventstream;
+package com.blueprints.heroku.services.eventstream;
 
 import java.util.ArrayList;
 import java.util.List;

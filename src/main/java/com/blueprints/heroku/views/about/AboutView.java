@@ -18,14 +18,14 @@ public class AboutView extends VerticalLayout {
     public AboutView(ApplicationInfoProvider applicationInfoProvider) {
         setSpacing(false);
 
-        Image img = new Image("../static/images/empty-plant.png", "placeholder plant");
+        Image img = new Image("../static/images/newstore-logo.png", "placeholder plant");
         img.setWidth("200px");
         add(img);
 
         String info = applicationInfoProvider.getInfo();
         String appName = applicationInfoProvider.getAppName();
-        add(new H2("This place intentionally left empty"));
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+        add(new H2("Newstore Heroku Sample Integration APP"));
+        add(new Paragraph("*******************************"));
         add(new Paragraph(info));
         add(new Paragraph(appName));
         setSizeFull();

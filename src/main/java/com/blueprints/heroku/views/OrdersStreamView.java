@@ -1,12 +1,10 @@
-package com.blueprints.heroku.views.helloworld;
+package com.blueprints.heroku.views;
 
 import com.blueprints.heroku.commons.InvalidCredentialsException;
 import com.blueprints.heroku.commons.NewstoreRestClient;
 import com.blueprints.heroku.commons.RestClientException;
-import com.blueprints.heroku.data.DataClient;
-import com.blueprints.heroku.eventstream.EventStreamService;
 import com.blueprints.heroku.queue.AmqpService;
-import com.blueprints.heroku.views.MainLayout;
+import com.blueprints.heroku.services.eventstream.EventStreamApiClient;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -18,11 +16,9 @@ import kong.unirest.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-
-@PageTitle("Hello World")
-@Route(value = "hello", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
-public class HelloWorldView extends HorizontalLayout {
+@PageTitle("Orders stream")
+@Route(value = "orders", layout = MainLayout.class)
+public class OrdersStreamView extends HorizontalLayout {
 
     private TextField name;
     private Button sayHello;
@@ -30,13 +26,13 @@ public class HelloWorldView extends HorizontalLayout {
     @Autowired
     private NewstoreRestClient restClient;
     @Autowired
-    private EventStreamService eventStreamService;
+    private EventStreamApiClient eventStreamService;
 
     @Autowired
     private AmqpService amqpService;
 
-    @Autowired
-    public HelloWorldView(DataClient dataClient) {
+
+    public OrdersStreamView() {
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
         sayHello.addClickListener(e -> {
@@ -53,7 +49,7 @@ public class HelloWorldView extends HorizontalLayout {
         setMargin(true);
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
 
-        add(name, sayHello);
+        //add(name, sayHello);
     }
 
     public String getIntegrationDetails() {
@@ -73,7 +69,7 @@ public class HelloWorldView extends HorizontalLayout {
     public String getEventStreamRegistrations () {
         String message;
         try {
-            kong.unirest.HttpResponse<String> response = restClient.get("/api/v1/org/integrations/eventstream/", null, null);
+            HttpResponse<String> response = restClient.get("/api/v1/org/integrations/eventstream/", null, null);
             message = response.getBody().toString();
         } catch (InvalidCredentialsException e) {
             message = e.getMessage();

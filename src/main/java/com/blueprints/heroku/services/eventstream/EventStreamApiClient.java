@@ -1,20 +1,16 @@
-package com.blueprints.heroku.eventstream;
+package com.blueprints.heroku.services.eventstream;
 
 import com.blueprints.heroku.commons.InvalidCredentialsException;
 import com.blueprints.heroku.commons.NewstoreRestClient;
 import com.blueprints.heroku.commons.RestClientException;
-import com.google.gson.JsonObject;
 import kong.unirest.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.temporal.TemporalUnit;
-import java.util.List;
 
 @Service
-public class EventStreamService {
+public class EventStreamApiClient {
     private final static String ENDPOINT_GET_INTEGRATION_DETAILS = "/api/v1/org/integrations/eventstream/%s";
     private final static String ENDPOINT_INTEGRATION_START = "/api/v1/org/integrations/eventstream/%s/_start";
     private final static String ENDPOINT_INTEGRATION_STOP = "/api/v1/org/integrations/eventstream/%s/_stop";

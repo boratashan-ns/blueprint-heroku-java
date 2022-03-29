@@ -2,8 +2,7 @@ package com.blueprints.heroku.views.settings;
 
 import com.blueprints.heroku.commons.InvalidCredentialsException;
 import com.blueprints.heroku.commons.RestClientException;
-import com.blueprints.heroku.data.DataClient;
-import com.blueprints.heroku.eventstream.EventStreamService;
+import com.blueprints.heroku.services.eventstream.EventStreamApiClient;
 import com.blueprints.heroku.views.MainLayout;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -36,8 +35,8 @@ public class SettingsView extends VerticalLayout {
     private String esDefaultCallbackApiKey;
 
 
-    private EventStreamService eventStreamService;
-    private DataClient dataClient;
+    private EventStreamApiClient eventStreamService;
+
 
 
     private Button enableEventStreamListener;
@@ -53,12 +52,11 @@ public class SettingsView extends VerticalLayout {
 
 
     @Autowired
-    public SettingsView(DataClient dataClient, EventStreamService eventStreamService,
+    public SettingsView( EventStreamApiClient eventStreamApiClient,
                         @Value("${appinfo.eventstream.integrationid}") String esIntegrationId,
                         @Value("${appinfo.eventstream.callbackurl}") String esDefaultCallbackUrl,
                         @Value("${appinfo.eventstream.apikey}") String esDefaultCallbackApiKey) {
-        this.dataClient = dataClient;
-        this.eventStreamService = eventStreamService;
+        this.eventStreamService = eventStreamApiClient;
         this.esIntegrationId = esIntegrationId;
         this.esDefaultCallbackUrl = esDefaultCallbackUrl;
         this.esDefaultCallbackApiKey = esDefaultCallbackApiKey;
