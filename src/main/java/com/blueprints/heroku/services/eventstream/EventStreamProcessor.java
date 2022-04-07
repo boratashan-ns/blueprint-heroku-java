@@ -141,10 +141,10 @@ public class EventStreamProcessor {
         events.append("]");
 
         String insertQry = "INSERT INTO public.orders (orderid, order_ext_id, status, events) VALUES (?, ?, ?, ?) ";
-        jdbcTemplate.update(insertQry,
+      /*  jdbcTemplate.update(insertQry,
                             new Object[] {o.getOrderId(), o.getOrderExtId(), o.getStatus(), events.toString()},
                             new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR});
-
+*/
         //UUID event_id = jdbcTemplate.queryForObject(qryReadFromPayload, new Object[] {payloadId}, UUID.class);
 
     }
