@@ -125,6 +125,7 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Sample holder", "la la-globe", SampleHolderView.class), //
                 new MenuItemInfo("Event stream", "la la-globe", EventStreamView.class), //
                 new MenuItemInfo("Orders stream", "la la-globe", OrdersStreamView.class), //
+                new MenuItemInfo("Configuration reader", "la la-globe", SampleHolderView.class), //
                 new MenuItemInfo("Settings", "la la-file", SettingsView.class),//
                 new MenuItemInfo("About", "la la-file", AboutView.class), //
         };
