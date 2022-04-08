@@ -122,12 +122,12 @@ public class MainLayout extends AppLayout {
 
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{
-                new MenuItemInfo("Sample holder", "la la-globe", SampleHolderView.class), //
-                new MenuItemInfo("Event stream", "la la-globe", EventStreamView.class), //
-                new MenuItemInfo("Orders stream", "la la-globe", OrdersStreamView.class), //
-                new MenuItemInfo("Configuration reader", "la la-globe", SampleHolderView.class), //
-                new MenuItemInfo("Settings", "la la-file", SettingsView.class),//
-                new MenuItemInfo("About", "la la-file", AboutView.class), //
+                new MenuItemInfo("Sample holder", "la la-folder-o", SampleHolderView.class), //
+                new MenuItemInfo("Event stream", "la la-funnel", EventStreamView.class), //
+                new MenuItemInfo("Orders stream", "la la-funnel", OrdersStreamView.class), //
+                new MenuItemInfo("Configuration reader", "la la-tools", SampleHolderView.class), //
+                new MenuItemInfo("Settings", "la la-wrench", SettingsView.class),//
+                new MenuItemInfo("About", "la la-fire", AboutView.class), //
         };
     }
 
