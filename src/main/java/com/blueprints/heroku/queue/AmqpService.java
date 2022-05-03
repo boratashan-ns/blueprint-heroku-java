@@ -20,7 +20,7 @@ public class AmqpService {
     }
 
     public void send(String queue, String message) {
-        amqpTemplate.convertAndSend(queue, message);
+        //amqpTemplate.convertAndSend(queue, message);
     }
 
 }
